@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: rgb(210, 244, 203);
+            padding: 20px;
+        }
+
+        .cart-box {
+            background: rgb(151, 199, 103);
+            padding: 15px;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            margin: 2px;
+        }
+
+        .plus { background:black; color:white;}
+        .minus { background: black; color:white;}
+        .remove { background: red; color: white; }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div style="background:rgb(12, 12, 88); padding:10px; color:white; display:flex; justify-content:space-between;">
+    
+    <div>
+        E Store
+    </div>
+
+    <div>
+        <a href="/" style="color:white; margin-right:10px;">Home</a>
+        <a href="/cart/" style="color:white; margin-right:10px;">Cart</a>
+        <a href="/login/" style="color:white;">Logout</a>
+    </div>
+
+</div>
+
+<h1>My Cart</h1>
+
+{% for item in cart_items %}
+    <div class="cart-box">
+        <h2>{{ item.product.name }}</h2>
+        <img src="{{ item.product.image.url }}" width="100">
+
+        <p>
+            Quantity: {{ item.quantity }}
+
+            <a href="{% url 'increase_quantity' item.product.id %}" class="btn plus">+</a>
+            <a href="{% url 'decrease_quantity' item.product.id %}" class="btn minus">-</a>
+        </p>
+
+        <p>Total: ₹{{ item.total_price }}</p>
+
+        <a href="{% url 'remove_from_cart' item.product.id %}" class="btn remove">
+            Remove
+        </a>
+    </div>
+{% endfor %}
+
+<h2>Total Price: ₹{{ total }}</h2>
+
+</body>
+</html>
